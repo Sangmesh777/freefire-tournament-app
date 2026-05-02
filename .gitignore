@@ -1,0 +1,20 @@
+# Dependencies
+backend/node_modules/
+mobile/node_modules/
+
+# Environment files
+backend/.env
+mobile/.env
+
+# Expo build
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
