@@ -1,13 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const twilio = require('twilio');
 const User = require('../models/User');
 require('dotenv').config();
-
-const twilioClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -40,13 +34,12 @@ const sendOTP = async (req, res) => {
       await user.update({ otp, otp_expires });
     }
 
-    await twilioClient.messages.create({
-      body: `Your Free Fire Tournament OTP is: ${otp}. Valid for 10 minutes.`,
-      from: process.env.TWILIO_PHONE_NUMBER,
-      to: phone,
-    });
+    // Twilio skipped for testing - OTP shown in console
+    console.log(`============================`);
+    console.log(`OTP for ${phone} is: ${otp}`);
+    console.log(`============================`);
 
-    res.status(200).json({ message: 'OTP sent successfully' });
+    res.status(200).json({ message: 'OTP sent successfully', otp }); // otp returned for testing
   } catch (error) {
     console.error('Send OTP error:', error);
     res.status(500).json({ message: 'Failed to send OTP', error: error.message });
